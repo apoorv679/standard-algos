@@ -1,2 +1,5 @@
 # ignore .exe files
 ./*.exe
+
+./input.txt
+./output.txt
