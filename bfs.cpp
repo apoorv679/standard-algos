@@ -65,6 +65,12 @@ void bfs(vector<vector<int>>& g, int n) {
             }
         }
 
+        /*
+        instead of directly pushing into the queue, we hold all the nodes 
+        reachable in the next level separately. this is useful in case we want 
+        to process nodes by level, or know which level does each node belong to
+        (say for getting the length of the shortest path in an undirected graph)
+        */
         if (q.empty() && !next.empty()) {
             for (int i = 0; i < next.size(); i++) {
                 q.push(next[i]);

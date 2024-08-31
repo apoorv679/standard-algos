@@ -39,10 +39,6 @@ vector<vector<int>> buildGraph() {
 }
 
 void dfs(vector<vector<int>>& g, unordered_set<int>& visited, int v) {
-    if (visited.find(v) != visited.end()) {
-        return;
-    }
-
     visited.insert(v);
     cout << v << " ";  // printing dfs
 

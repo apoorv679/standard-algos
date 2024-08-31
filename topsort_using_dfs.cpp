@@ -34,16 +34,27 @@ vector<vector<int>> buildGraph() {
         int u, v;
         cin >> u >> v;
         g[u].push_back(v);
-        // g[v].push_back(u);  // undirected graph does not have a topological order
+        // g[v].push_back(u);  // only DAGs can have a topological order
     }
     return g;
 }
 
-void topSort(vector<vector<int>>& g, unordered_set<int>& visited, int v) {
-    if (visited.find(v) != visited.end()) {
-        return;
-    }
+/*
+cycle detection in directed graph:
+topological sorting can help detect cycles in a directed graph
+a graph (directed/undirected) will have a cycle if it has a "back-edge"
 
+back-edge: an edge that connects a node to one of its ancestors in a DFS tree
+i.e. if a node has an edge to another node which has not yet been processed by
+the dfs recursion.
+In other words, the node is not present in the order vector in below code
+Since searching in a vector is O(n), we can use an unordered_set::processed to keep
+track of this property
+
+cycle detection in undirected graph:
+if a node has an edge to another node which is not its parent 
+*/
+void topSort(vector<vector<int>>& g, unordered_set<int>& visited, int v) {
     visited.insert(v);
     for (int i = 0; i < g[v].size(); i++) {
         if (visited.find(g[v][i]) == visited.end()) {
