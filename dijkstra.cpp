@@ -14,7 +14,7 @@
 // 4 2 9
 // 0 2
 
-// ExpectedOutput:
+// Expected Output:
 // shortest distance from 0
 // vertice 0: 0
 // vertice 1: 2

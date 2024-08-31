@@ -18,7 +18,7 @@
 // 7 6
 // 0
 
-// ExpectedOutput:
+// Expected Output:
 // level 0: 0
 // level 1: 1 3
 // level 2: 2 7 4 6

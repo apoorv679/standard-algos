@@ -18,7 +18,7 @@
 // 7 6
 // 0
 
-// ExpectedOutput:
+// Expected Output:
 // 0 3 2 8 9 1 6 7 4 5
 
 #include <bits/stdc++.h>
