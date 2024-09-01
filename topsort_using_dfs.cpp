@@ -14,7 +14,6 @@
 // 4 5
 // 4 6
 // 7 6
-// 0
 
 // Expected Output:
 // topological order:
@@ -78,10 +77,12 @@ int main() {
     vector<vector<int>> g = buildGraph();
     unordered_set<int> visited;
 
-    int start;
-    cin >> start;
-    topSort(g, visited, start);
-
+    for (int i = 0; i < g.size(); i++) {
+        if (visited.find(i) == visited.end()) {
+            topSort(g, visited, i);
+        }
+    }
+    
     // basically dfs will complete in the reverse topological order
     reverse(order.begin(), order.end());
 
@@ -89,14 +90,6 @@ int main() {
     for (int i = 0; i < order.size(); i++) {
         cout << order[i] << " ";
     }
-
-    /*
-    at this stage it might be required to check if any node is missed
-    in the order vector which would happen if they cannot be reached
-    from start node.
-    instead, we can run topSort algorithm on all nodes with indegree = 0
-    To calculate indegree, we can run over all the edges and keep a counter
-    */
 
     return 0;
 }

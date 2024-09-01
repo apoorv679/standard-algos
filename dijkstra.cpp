@@ -114,11 +114,7 @@ int main() {
 #endif
 
     vector<vector<pii>> g = buildGraph();
-    /*
-    could be that we are asked to do dfs over all nodes
-    in that case, we can pass the visited from main()
-    and run dfs on the nodes which are not visited
-    */
+
     int source, destination;
     cin >> source >> destination;
     dijkstra(g, source, destination);

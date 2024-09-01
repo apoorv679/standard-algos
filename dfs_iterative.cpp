@@ -74,8 +74,8 @@ int main() {
     vector<vector<int>> g = buildGraph();
     /*
     could be that we are asked to do dfs over all nodes
-    in that case, we can pass the visited from main()
-    and run dfs on the nodes which are not visited
+    in that case, we can run dfs in a for loop over all 
+    the nodes which are not visited
     */
     int start;
     cin >> start;
