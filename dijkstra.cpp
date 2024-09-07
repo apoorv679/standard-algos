@@ -77,7 +77,7 @@ void dijkstra(vector<vector<pii>>& g, int src, int dest) {
             }
 
             // relax edge
-            if (d[v] == INT_MAX || d[v] > d[u] + w) {
+            if (d[v] > d[u] + w) {
                 d[v] = d[u] + w;
                 parent[v] = u;
 
