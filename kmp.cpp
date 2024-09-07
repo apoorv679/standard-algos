@@ -20,6 +20,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// equivalent concise code!
+vector<int> buildLPSConcise(string pattern) {
+    vector<int> lps(pattern.length(), 0);
+
+    for (int i = 1, prevLPS = 0; i < pattern.length(); i++) {
+        while (prevLPS > 0 && pattern[i] != pattern[prevLPS]) prevLPS = lps[prevLPS-1];
+        if (pattern[i] == pattern[prevLPS]) lps[i] = ++prevLPS;
+    }
+
+    // printArr(lps);
+    return lps;
+}
+
+vector<int> kmpConcise(string text, string pattern) {
+    vector<int> lps = buildLPSConcise(pattern);
+
+    vector<int> result;
+    for (int i = 0, j = 0; j < text.length(); j++) {
+        while (i > 0 && pattern[i] != text[j]) i = lps[i-1];
+        if (pattern[i] == text[j]) i++;
+        if (i == pattern.length()) result.push_back(j - i + 2); // +2 as j is not incremented at this point
+    }
+    return result;
+}
+
 vector<int> buildLongestPrefixSuffix(string pattern) {
     vector<int> lps(pattern.length());
     // prefix should be proper prefix i.e. prefix != original string
@@ -95,6 +120,7 @@ int main() {
         cin >> text >> pattern;
 
         printArr(kmp(text, pattern));
+        // printArr(kmpConcise(text, pattern));
     }
 
     return 0;
