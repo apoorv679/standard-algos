@@ -3,3 +3,6 @@
 
 input.txt
 output.txt
+
+# ignore IDE settings
+.vscode
