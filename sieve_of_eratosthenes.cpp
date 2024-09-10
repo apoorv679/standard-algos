@@ -54,13 +54,17 @@ vector<int> sieveOfEratosthenes(int n) {
     return result;
 }
 
-// TODO: sieve algorithm in O(n)
-vector<int> fastSieve(int n) {
-
-}
+/*  ///////////////////////////////////////////
+    EXTRAS: more algos related to prime numbers
+    ///////////////////////////////////////////
+*/
 
 /*
-EXTRAS: more algos related to prime numbers
+    We can use sieve to create a prefix sum array and 
+    get number of prime factors between any 2 numbers 
+    L and R in O(1) time
+
+    TODO: implment the above idea
 */
 
 // O(sqrt(n)) check number is prime or not
@@ -72,7 +76,7 @@ bool isPrime(int n) {
     return true;
 }
 
-// TODO: prime factorisation
+// See also: prime factorisation using sieve
 
 int main() {
     ios_base::sync_with_stdio(0);
@@ -88,6 +92,8 @@ int main() {
     cin >> n;
 
     printArr(sieveOfEratosthenes(n));
+    // cout << isPrime(n) << "\n";
+    // printArr(primeFactors(n));
 
     return 0;
 }
