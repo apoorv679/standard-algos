@@ -167,6 +167,61 @@ void insertionsort(vector<int>& arr) {
     }
 }
 
+void merge(vector<int>& arr, int l, int mid, int h) {
+    int i = l, j = mid + 1;
+    vector<int> temp;
+
+    while (i <= mid && j <= h) {
+        if (arr[i] > arr[j])
+            temp.push_back(arr[j++]);
+        else
+            temp.push_back(arr[i++]);
+    }
+
+    while (i <= mid) temp.push_back(arr[i++]);
+    while (j <= h) temp.push_back(arr[j++]);
+
+    for (int i = 0; i < temp.size(); i++) arr[l++] = temp[i];
+}
+
+void mergesortutil(vector<int>& arr, int l, int h) {
+    if (l >= h) return;
+
+    int mid = l + (h - l) / 2;
+    mergesortutil(arr, l, mid);
+    mergesortutil(arr, mid + 1, h);
+    merge(arr, l, mid, h);
+
+    // see state after each merge
+    cout << "range " << l << " to " << h << ": ";
+    for (int i = l; i <= h; i++) cout << arr[i] << " ";
+    cout << "\n";
+}
+
+/*
+    Merge sort
+    ==============
+    Logic: DnC. Divide larger array recursively and stitch together each sorted part
+
+    Time Complexity: O(nlog(n)) in all;
+     - best: when array is already sorted
+     - average: random order
+     - worst: reverse sorted
+    Space Complexity: O(n)
+    Properties: [[NOT in-place, external, stable, offline]]
+
+    Special:
+    1. Used to sort large dataset, as it is an external sort
+    2. Stable so is useful when sorting by multiple parameters is required,
+    for eg. when sortin objects
+    3. Can be parallelised as each subarray can be sorted independently
+    4. Optimised and has a guaranteed nlogn time, even in worst case
+    5. only downside is the extra space required
+*/
+void mergesort(vector<int>& arr) {
+    mergesortutil(arr, 0, arr.size() - 1);
+}
+
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
@@ -189,8 +244,11 @@ int main() {
     // bubblesort(v);
     // cout << "bubblesort: ";
 
-    insertionsort(v);
-    cout << "insertionsort: ";
+    // insertionsort(v);
+    // cout << "insertionsort: ";
+
+    mergesort(v);
+    cout << "mergesort: ";
 
     printv(v);
 
