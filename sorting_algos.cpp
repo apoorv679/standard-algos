@@ -3,7 +3,7 @@
 // 5 8 4 4 2 0 -23 3 4 7
 
 // Expected Output:
-// <some>sort: -23 0 2 3 4 4 4 5 7 8 
+// <some>sort: -23 0 2 3 4 4 4 5 7 8
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -230,22 +230,22 @@ int partition(vector<int>& arr, int l, int h) {
     */
     int pivot = arr[h];
 
-    int i = l-1, j = h;
+    int i = l - 1, j = h;
     for (int j = l; j < h; j++) {
         if (arr[j] < pivot) {
             i++;
             swap(arr[i], arr[j]);
         }
     }
-    swap(arr[i+1], arr[h]);
+    swap(arr[i + 1], arr[h]);
 
-    return i+1;
+    return i + 1;
 }
 
 void quicksortutil(vector<int>& arr, int l, int h) {
     if (l >= h) return;
 
-    int p = partition(arr, l, h); // O(n)
+    int p = partition(arr, l, h);  // O(n)
 
     // see state after each partition
     cout << "range " << l << " to " << h << ": ";
@@ -270,13 +270,13 @@ void quicksortutil(vector<int>& arr, int l, int h) {
     Properties: [[in-place, internal, unstable, offline]]
 
     ** Optimising quicksort **
-    1. Selecting the right pivot is imp for quicksort. 
-    We can pick a random pivot to mostly avoid getting the worst case 
-    (choose an index between l and h randomly, and swap with h. 
-    Then continue the algorithm as usual) 
-    or, 
-    We can pick the median of the elements as that will always divide the 
-    array into equal parts. Median of unsorted array can be found in O(n) time 
+    1. Selecting the right pivot is imp for quicksort.
+    We can pick a random pivot to mostly avoid getting the worst case
+    (choose an index between l and h randomly, and swap with h.
+    Then continue the algorithm as usual)
+    or,
+    We can pick the median of the elements as that will always divide the
+    array into equal parts. Median of unsorted array can be found in O(n) time
     (see GFG)
     2. There is a faster parition algo (Hoare's partition) which on average do(es
     three times lesser swaps than the one implemented below (Lomuto's partition).
@@ -291,6 +291,71 @@ void quicksortutil(vector<int>& arr, int l, int h) {
 void quicksort(vector<int>& arr) {
     quicksortutil(arr, 0, arr.size() - 1);
 }
+
+void heapify(vector<int>& arr, int n, int i) {
+    int l = 2 * i + 1;
+    int r = 2 * i + 2;
+    int largest = i;
+
+    if (l < n && arr[l] > arr[largest]) {
+        largest = l;
+    }
+
+    if (r < n && arr[r] > arr[largest]) {
+        largest = r;
+    }
+
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+        heapify(arr, n, largest);
+    }
+}
+
+/*
+    Heap sort
+    ==============
+    Logic: Imagine array as a binary heap, which is a complete tree 
+    with the heap property that each root is either >= (max heap) or 
+    <= (min heap) than its child nodes. Keeping this in mind, we find
+    the max in between the i-th node and its left (2i + 1) and right (2i + 2) 
+    child node, and if the parent is not the largest, we swap them, and then 
+    go down the tree recursively. This causes greater elements to go to the 
+    top while maintaing the heap property at each node
+
+    Time Complexity: O(nlog(n)) in all cases;
+     - best: in each iteration, pivot divides the array equally
+     - average: random order
+     - worst: already sorted
+    Space Complexity: O(log(n)) due to call stack, O(1) iterative heapify impl.
+    Properties: [[in-place, internal, unstable, offline]]
+    Heapsort can be made stable as well [see GFG] 
+
+    Special:
+    1. Usually 2-3 times slower than well implemented quicksort
+    as it has high constant factor and due to lack of locality of reference
+*/
+void heapsort(vector<int>& arr) {
+    int n = arr.size();
+    // build heap
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    // extract max and heapify
+    for (int i = n - 1; i >= 0; i--) {
+        swap(arr[0], arr[i]);
+        heapify(arr, i, 0);
+    }
+}
+
+/*
+    C++ STL uses sorting "weapon" called Introsort
+    (https://www.geeksforgeeks.org/introsort-cs-sorting-weapon/)
+
+    It starts with quicksort and switches to heapsort if recursion 
+    depth goes beyomd a certain limit (to avoid quicksort's O(n^2) case) 
+    and finally insertion sort when the number of elements is low
+    (<= 16 - decided according to empirical research)
+*/
 
 int main() {
     ios_base::sync_with_stdio(0);
@@ -322,6 +387,9 @@ int main() {
 
     // quicksort(v);
     // cout << "quicksort: ";
+
+    // heapsort(v);
+    // cout << "heapsort: ";
 
     printv(v);
 
