@@ -48,38 +48,33 @@ void bfs(vector<vector<int>>& g, int n) {
     int level = 0;
     vector<int> next;
 
-    cout << "level " << level << ": ";
     while (!q.empty()) {
-        int v = q.front();
-        q.pop();
+        cout << "level " << level++ << ": ";
+        
+        int size = q.size();
+        /*
+            the number of vertices in the queue are captured at the start for
+            each level. This ensures that only the vertices belonging to this 
+            level are dequeued, and are able to add their neighbours to the queue
+        */
+        for (int i = 0; i < size; i++) {
+            int v = q.front();
+            q.pop();
 
-        if (visited.find(v) == visited.end()) {
-            visited.insert(v);
+            if (visited.find(v) == visited.end()) {
+                visited.insert(v);
 
-            cout << v << " ";  // printing bfs
+                cout << v << " ";  // printing bfs
 
-            for (int i = 0; i < g[v].size(); i++) {
-                if (visited.find(g[v][i]) == visited.end()) {
-                    next.push_back(g[v][i]);
+                for (int i = 0; i < g[v].size(); i++) {
+                    if (visited.find(g[v][i]) == visited.end()) {
+                        q.push(g[v][i]);
+                    }
                 }
             }
         }
-
-        /*
-        instead of directly pushing into the queue, we hold all the nodes 
-        reachable in the next level separately. this is useful in case we want 
-        to process nodes by level, or know which level does each node belong to
-        (say for getting the length of the shortest path in an undirected graph)
-        */
-        if (q.empty() && !next.empty()) {
-            for (int i = 0; i < next.size(); i++) {
-                q.push(next[i]);
-            }
-            next.clear();
-
-            level++;
-            cout << "\nlevel " << level << ": ";
-        }
+        
+        cout << "\n";
     }
 }
 
