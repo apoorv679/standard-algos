@@ -222,6 +222,76 @@ void mergesort(vector<int>& arr) {
     mergesortutil(arr, 0, arr.size() - 1);
 }
 
+int partition(vector<int>& arr, int l, int h) {
+    /*
+        intuition: i represents the last position where an element
+        <= pivot is found. Once we have processed al the elements
+        other than the pivot, we can safely insert it at (i+1)th position
+    */
+    int pivot = arr[h];
+
+    int i = l-1, j = h;
+    for (int j = l; j < h; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i+1], arr[h]);
+
+    return i+1;
+}
+
+void quicksortutil(vector<int>& arr, int l, int h) {
+    if (l >= h) return;
+
+    int p = partition(arr, l, h); // O(n)
+
+    // see state after each partition
+    cout << "range " << l << " to " << h << ": ";
+    for (int i = l; i <= h; i++) cout << arr[i] << " ";
+    cout << "\n";
+
+    quicksortutil(arr, l, p - 1);
+    quicksortutil(arr, p + 1, h);
+}
+
+/*
+    Quick sort
+    ==============
+    Logic: DnC. Pick a 'pivot' element and put it in it's correct position.
+    This is done by moving the elements > pivot on its right, and <= on the left
+
+    Time Complexity: O(nlog(n)) in best/average, O(n^2) in worst;
+     - best: in each iteration, pivot divides the array equally
+     - average: random order
+     - worst: already sorted
+    Space Complexity: O(1)
+    Properties: [[in-place, internal, unstable, offline]]
+
+    ** Optimising quicksort **
+    1. Selecting the right pivot is imp for quicksort. 
+    We can pick a random pivot to mostly avoid getting the worst case 
+    (choose an index between l and h randomly, and swap with h. 
+    Then continue the algorithm as usual) 
+    or, 
+    We can pick the median of the elements as that will always divide the 
+    array into equal parts. Median of unsorted array can be found in O(n) time 
+    (see GFG)
+    2. There is a faster parition algo (Hoare's partition) which on average do(es
+    three times lesser swaps than the one implemented below (Lomuto's partition).
+    (see GFG)
+
+    Special:
+    1. Fastest general purpose sorting algorithm
+    2. Is cache friendly as it operates over the same array
+    3. Is tail recursive, and hence all tail optimisations can be done
+    4. Not good for small data sets
+*/
+void quicksort(vector<int>& arr) {
+    quicksortutil(arr, 0, arr.size() - 1);
+}
+
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
@@ -247,8 +317,11 @@ int main() {
     // insertionsort(v);
     // cout << "insertionsort: ";
 
-    mergesort(v);
-    cout << "mergesort: ";
+    // mergesort(v);
+    // cout << "mergesort: ";
+
+    // quicksort(v);
+    // cout << "quicksort: ";
 
     printv(v);
 
