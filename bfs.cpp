@@ -73,7 +73,7 @@ void bfs(vector<vector<int>>& g, int n) {
                 }
             }
         }
-        
+
         cout << "\n";
     }
 }
@@ -90,9 +90,9 @@ int main() {
 
     vector<vector<int>> g = buildGraph();
     /*
-    could be that we are asked to do bfs over all nodes
-    in that case, we can pass the visited from main()
-    and run bfs on the nodes which are not visited
+        could be that we are asked to do bfs over all nodes
+        in that case, we can pass the visited from main()
+        and run bfs on the nodes which are not visited
     */
     int start;
     cin >> start;
