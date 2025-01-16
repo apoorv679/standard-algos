@@ -12,17 +12,14 @@ permissions:
 jobs:
     pr_agent_job:
       if: ${{ github.event.sender.type != 'Bot' }}
-      runs-on: self-hosted
-    #   permissions:
-    #     issues: write
-    #     pull-requests: write
-    #     contents: write
+      runs-on: ubuntu-latest
       name: Run pr agent on every pull request, respond to user comments
       steps:
         - name: PR Agent action step
           id: pragent
-          uses: apoorv679/pr-agent@main
+          uses: apoorv679/pr-agent@test/pr-action
           env:
             OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             CONFIG.MODEL: gpt-3.5-turbo
+            OPENAI_API_BASE: ${{ secrets.OPENAI_API_BASE }}
